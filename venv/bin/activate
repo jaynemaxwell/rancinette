@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # This file must be used with "source bin/activate" *from bash*
 # you cannot run it directly
 
@@ -33,9 +35,12 @@ deactivate () {
 }
 
 # unset irrelevant variables
-deactivate nondestructive
+#deactivate nondestructive
 
-VIRTUAL_ENV=/home/jayne/Code/42/Tools/xicodomingues_francinette/venv
+# VIRTUAL_ENV should be supplied when sourcing this script
+#VIRTUAL_ENV=$(dirname "${BASH_SOURCE[0]}")/..
+#echo "VIRTUAL_ENV : ${BASH_SOURCE[0]}"
+echo "VIRTUAL_ENV : $VIRTUAL_ENV"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

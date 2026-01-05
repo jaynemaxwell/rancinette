@@ -36,19 +36,33 @@ fi
 cd "$install_location/francinette" || exit
 
 # the venv is now bundled except for packages
+# we arent actually activating the venv though
+# the entry point at ~/.local/bin relies on it explicitly
+cd "$install_location/francinette/venv/"
+
+: '
+deactivate
 
 # activate venv
-. venv/bin/activate
+export VIRTUAL_ENV=$(pwd)
+source ./bin/activate
+'
+
+export PYTHONUSERBASE=$(pwd)
+echo $PYTHONUSERBASE
+
+./bin/pip -V
 
 # install requirements
-if ! python -m pip install -r requirements.txt ; then
-	echo 'Problem launching the installer. Contact me (fsoares- on slack)'
+#if ! ./bin/pip install --user -r ../requirements.txt; then
+if ! ./bin/pip install -r ../requirements.txt --target $(pwd)/lib/python3.11/site-packages --disable-pip-version-check; then
 	exit 1
 fi
 
 mkdir -p "$HOME/.local/bin/"
 cd "$HOME/.local/bin/"
 
+# TODO proper path detection, this fails for some reason
 if [[ ":$PATH:" != *":$(pwd):"* ]]; then
 	read -p "Do you wish to add ~/.local/bin/ to PATH ? [Y/n]" add_to_path
 	if [[ ${add_to_path,,} != 'n' ]]; then
