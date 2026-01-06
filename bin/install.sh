@@ -67,7 +67,7 @@ cd "$HOME/.local/bin/"
 if [[ ":$PATH:" != *":$(pwd):"* ]]; then
 	read -p "Do you wish to add ~/.local/bin/ to PATH ? [Y/n]" add_to_path
 	if [[ ${add_to_path,,} != 'n' ]]; then
-		echo "export PATH='$PATH:$(pwd)'" >> $HOME/.${SHELL##/bin/}rc
+		echo 'export PATH=$PATH:'"$(pwd)" >> $HOME/.${SHELL##/bin/}rc
 		echo "SUCCESS : appended directory to PATH"
 	else
 		echo "WARNING : selected install location not found in PATH (francinette will not be available unless manually inserted into scope)"
